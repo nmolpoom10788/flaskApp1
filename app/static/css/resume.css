@@ -1,17 +1,11 @@
-/* {
- margin: 0;
- padding: 0;
- box-sizing: border-box;
- font-family: 'Poppins', sans-serif
-
-} */
 
 body {
-    background-color:gray;
+    background: lightblue; 
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    /* font-family: 'Fredoka One', cursive; */
 }
 
 .container
@@ -20,15 +14,16 @@ body {
     width: 100%;
     max-width: 1000px;
     min-height: 1000px;
-    background: yellowgreen;
+    background: #f4d35e;
     margin: 50px;
     display: grid;
-    grid-template-columns: 1.5fr 2fr;
+    grid-template-columns: 1.2fr 2fr;
+    box-shadow: 0 35px 55px rgb(0, 0, 0,0.1);
 }
 .container .left_side
 {
     position: relative;
-    background: white;
+    background: #0d3b66;
     padding: 40px;
 }
 
@@ -39,7 +34,7 @@ body {
     flex-direction: column;
     align-items: center;
     padding-bottom: 5px;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid rgb(254, 252, 252);
 
 }
 
@@ -63,13 +58,14 @@ body {
 
 .myprofile h2
 {
-    color: black;
+    color: rgb(250, 246, 246);
     font-size: 1.5em;
     margin-top: 20px;
     text-transform: uppercase;
     text-align: center;
     font-weight: 600;
     line-height: 1.4em;
+    font-family: 'Fredoka One', cursive;
 }
 .myprofile h2 span
 {
@@ -83,9 +79,10 @@ body {
 }
 .titlecon
 {
-    color: black;
+    color: rgb(245, 237, 237);
     text-transform: uppercase;
     font-weight: 600;
+    font-family: 'Fredoka One', cursive;
     letter-spacing: 1px;
     margin-bottom: 10px;
 }
@@ -105,11 +102,16 @@ body {
     display: inline-block;
     width: 30px;
     font-size: 18px;
-    color: green;
+    color: rgb(245, 245, 245);
+}
+.contactInfo ul li span 
+{
+    color: rgb(246, 240, 240);
+    font-weight: 400;
 }
 .contactInfo ul li span a
 {
-    color: black;
+    color: rgb(246, 240, 240);
     font-weight: 300;
 }
 
@@ -128,16 +130,59 @@ body {
     top: 0;
     left: 0;
     height: 100%;
-    background: yellow;
+    background: #f4d35e;
 }
 
-.container .rigth_side
+.container .right_side
 {
     position: relative;
-    background: yellow;
-    padding: 40px;
+    background: #f4d35e;
+    padding: 20px;   
+}
+.title_right
+{
+    margin-bottom: 50px;
+}
+.title_right:last-child{
+    margin-bottom: 0px;
+}
+
+.txt
+{
+    color: rgb(0, 0, 0);
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: 'Fredoka One', cursive;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.content_table
+{
+    border-collapse: collapse;
+    margin: 10px 0;
+    font: size 10px;
+    min-width: 400px; 
+}
+
+.content_table thead tr
+{
+    background-color: #ee964b;
+    color: #fff;
+    text-align: left;
+}
+
+.content_table th,
+.content_table td
+{
+    padding: 12px 15px;
+}
+
+.content_table tbody tr
+{
+    border-bottom: 1px solid #ee964b;
 }
 
 img {
-    border-radius: 8px;
+    border-radius: 10px;
   }
