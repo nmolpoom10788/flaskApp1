@@ -1,3 +1,143 @@
+/* {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ font-family: 'Poppins', sans-serif
+
+} */
+
 body {
-    background-color:#2be300;
+    background-color:gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
+
+.container
+{
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    min-height: 1000px;
+    background: yellowgreen;
+    margin: 50px;
+    display: grid;
+    grid-template-columns: 1.5fr 2fr;
+}
+.container .left_side
+{
+    position: relative;
+    background: white;
+    padding: 40px;
+}
+
+.myprofile
+{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #000;
+
+}
+
+.myprofile .imgA
+{
+    position: relative;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    /* overflow: hidden; */
+}
+.myprofile .imgA img
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.myprofile h2
+{
+    color: black;
+    font-size: 1.5em;
+    margin-top: 20px;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.4em;
+}
+.myprofile h2 span
+{
+    font-size: 0.8em;
+    font-weight:300;
+}
+
+.contactInfo
+{
+    padding-top: 40px;
+}
+.titlecon
+{
+    color: black;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+.contactInfo ul
+{
+    position: relative;
+}
+.contactInfo ul li
+{
+    position: relative;
+    list-style: none;
+    margin: 10px;
+    cursor: pointer;
+}
+.contactInfo ul li .titlecon
+{
+    display: inline-block;
+    width: 30px;
+    font-size: 18px;
+    color: green;
+}
+.contactInfo ul li span a
+{
+    color: black;
+    font-weight: 300;
+}
+
+.contactInfo.language .percent
+{
+    position: relative;
+    width: 100%;
+    height: 6px;
+    background: gray;
+    display: block;
+    margin-top: 5px;
+}
+.contactInfo.language .percent div
+{
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: yellow;
+}
+
+.container .rigth_side
+{
+    position: relative;
+    background: yellow;
+    padding: 40px;
+}
+
+img {
+    border-radius: 8px;
+  }
