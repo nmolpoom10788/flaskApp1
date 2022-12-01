@@ -75,7 +75,7 @@ body {
 
 .contactInfo
 {
-    padding-top: 40px;
+    padding-top: 20px;
 }
 .titlecon
 {
@@ -86,27 +86,31 @@ body {
     letter-spacing: 1px;
     margin-bottom: 10px;
 }
+
+
 .contactInfo ul
 {
     position: relative;
+    
 }
 .contactInfo ul li
 {
     position: relative;
     list-style: none;
-    margin: 10px;
+    margin: 5px;
     cursor: pointer;
 }
 .contactInfo ul li .titlecon
 {
     display: inline-block;
     width: 30px;
-    font-size: 18px;
+    font-size :18px;
     color: rgb(245, 245, 245);
 }
 .contactInfo ul li span 
 {
     color: rgb(246, 240, 240);
+    font-size: 18px;
     font-weight: 400;
 }
 .contactInfo ul li span a
@@ -114,6 +118,8 @@ body {
     color: rgb(246, 240, 240);
     font-weight: 300;
 }
+
+
 
 .contactInfo.language .percent
 {
@@ -131,8 +137,12 @@ body {
     left: 0;
     height: 100%;
     background: #f4d35e;
+    
 }
 
+
+
+/* เกี่ยวกับเนื้อหาฝั่งขวา */
 .container .right_side
 {
     position: relative;
@@ -141,12 +151,13 @@ body {
 }
 .title_right
 {
-    margin-bottom: 50px;
+    margin-bottom: 40px;
+    
 }
 .title_right:last-child{
     margin-bottom: 0px;
+    
 }
-
 .txt
 {
     color: rgb(0, 0, 0);
@@ -155,6 +166,32 @@ body {
     font-family: 'Fredoka One', cursive;
     letter-spacing: 1px;
     margin-bottom: 10px;
+    border-bottom: 1.5px solid rgb(254, 252, 252);
+}
+
+p
+{
+    color: #0d3b66;
+    font-size: 20px;
+}
+
+.title_right h5
+{
+    color: rgb(126, 95, 240);
+    font-weight: 500;
+    font-size: 20px;
+}
+.title_right h4:nth-child(2)
+{
+    color: rgb(3, 3, 3);
+    font-weight: 500;
+    font-size: 20px;
+}
+.title_right h4
+{
+    color: rgb(16, 15, 15);
+    font-weight: 300;
+    font-size: 20px;
 }
 
 .content_table
@@ -186,3 +223,7 @@ body {
 img {
     border-radius: 10px;
   }
+
+
+
+
