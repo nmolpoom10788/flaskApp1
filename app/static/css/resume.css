@@ -34,7 +34,7 @@ body {
     flex-direction: column;
     align-items: center;
     padding-bottom: 5px;
-    border-bottom: 1px solid rgb(254, 252, 252);
+    border-bottom: 1.5px solid rgb(254, 252, 252);
 
 }
 
@@ -146,7 +146,7 @@ body {
 .container .right_side
 {
     position: relative;
-    background: #f4d35e;
+    background: #d9dddc;
     padding: 20px;   
 }
 .title_right
@@ -166,18 +166,18 @@ body {
     font-family: 'Fredoka One', cursive;
     letter-spacing: 1px;
     margin-bottom: 10px;
-    border-bottom: 1.5px solid rgb(254, 252, 252);
+    border-bottom: 2px solid  #0d3b66;
 }
 
 p
 {
-    color: #0d3b66;
+    color: black;
     font-size: 20px;
 }
 
 .title_right h5
 {
-    color: rgb(255, 255, 255);
+    color: #0d3b66;
     font-weight: 1000 ;
     font-size: 20px;
     margin: 2px;
@@ -208,7 +208,7 @@ p
 
 .content_table thead tr
 {
-    background-color: #ee964b;
+    background-color: #0d3b66;
     color: #fff;
     text-align: left;
 }
@@ -221,7 +221,7 @@ p
 
 .content_table tbody tr
 {
-    border-bottom: 1px solid #ee964b;
+    border-bottom: 2px solid#0d3b66;
 }
 
 img {
