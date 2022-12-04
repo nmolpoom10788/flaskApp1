@@ -151,7 +151,7 @@ body {
 }
 .title_right
 {
-    margin-bottom: 40px;
+    margin-bottom: 60px;
     
 }
 .title_right:last-child{
@@ -179,10 +179,11 @@ p
 {
     color: #0d3b66;
     font-weight: 1000 ;
-    font-size: 20px;
+    font-size: 24px;
     margin: 2px;
     
 }
+
 .title_right h4:nth-child(2)
 {
     color: rgb(3, 3, 3);
@@ -198,6 +199,26 @@ p
     margin: 3px;
 }
 
+.title_pro h5{
+    color: #0d3b66;
+    font-weight: 1000;
+    font-size: 24px;
+    margin: 2px;
+}
+.title_prot h4:nth-child(2)
+{
+    color: rgb(3, 3, 3);
+    font-weight: 800;
+    font-size: 20px;
+    margin-top: 3px;
+}
+.title_pro h4
+{
+    color: rgb(16, 15, 15);
+    font-weight: 200;
+    font-size: 20px;
+    margin: 3px;
+}
 .content_table
 {
     border-collapse: collapse;
