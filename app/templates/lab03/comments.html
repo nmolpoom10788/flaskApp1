@@ -5,11 +5,11 @@
   <div style="width: 50%; margin: auto">
     {% for comment in comments %}
         <div style="padding: 10px;
-              background-color: #EEE;
+              background-color: rgb(242, 6, 6);
               margin: 20px">
           <p>#{{ loop.index }}</p>
           <div class='message'>
-            <h3>{{ comment['title'] }}</h3>
+            <h3>{{ comment['title'] }}</h3>ป  
             <p>{{ comment['content'] }}</p>
           </div>
         </div>
