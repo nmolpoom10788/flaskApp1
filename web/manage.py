@@ -3,12 +3,10 @@ from flask.cli import FlaskGroup
 
 from app import app, db
 from app.models.contact import Contact
+from app.models.contact import BlogEntry
 
 
 cli = FlaskGroup(app)
-
-
-
 
 @cli.command("create_db")
 def create_db():
@@ -17,14 +15,21 @@ def create_db():
     db.session.commit()
 
 
-
-
 @cli.command("seed_db")
 def seed_db():
     db.session.add(
         Contact(firstname='สมชาย', lastname='ทรงแบด', phone='081-111-1111'))
-    db.session.commit()
+    db.session.add(
+        BlogEntry(name='chaiwitchit', message='lab 11 create in twitter', email='nmolpoom10788@gmail.com')
+    )
+    db.session.add(
+        BlogEntry(name='chaiwitchit', message='It is very difficult.', email='nmolpoom10788@gmail.com')
+    )
+    db.session.add(
+        BlogEntry(name='chaiwitchit', message='hello world', email='nmolpoom10788@gmail.com')
+    )
 
+    db.session.commit()
 
 
 

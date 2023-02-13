@@ -12,8 +12,6 @@ def home():
     return "Flask says 'Hello world!'"
 
 
-
-
 @app.route('/db')
 def db_connection():
     try:
@@ -105,3 +103,18 @@ def lab10_remove_contacts():
             app.logger.debug(ex)
             raise
     return lab10_db_contacts()
+
+@app.route('/lab11')
+def lab11_microblog():
+    return app.send_static_file('lab11_microblog.html')
+
+
+@app.route("/lab11/contacts")
+def lab11_db_contacts():
+    blog_entries = []
+    db_contacts = BlogEntry.query.all()
+
+    blog_entries = list(map(lambda x: x.to_dict(), db_contacts))
+    app.logger.debug("DB Contacts: " + str(blog_entries))
+
+    return jsonify(blog_entries)
