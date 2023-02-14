@@ -17,12 +17,12 @@ img.tw-user-medium {
 }
  
 #nav-search {
-    border-radius: 20px;
+    border-radius: 35px;
     background-color: #e7ecf0
 }
  
 #nav-tweet-btn {
-    border-radius: 20px;
+    border-radius: 35px;
     background-color: #67b1f9;
     color: #ffffff;
 }
@@ -58,3 +58,15 @@ img.tw-user-medium {
     padding-right: 10px;
 }
 
+.button_post {
+    background-color:#9d82f9;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin: 4px 2px;
+    cursor: pointer;
+}

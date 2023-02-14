@@ -1,11 +1,9 @@
 from app import db
-from flash.cli import FlaskGroup
 from sqlalchemy_serializer import SerializerMixin
 
 
 class Contact(db.Model, SerializerMixin):
     __tablename__ = "contacts"
-
 
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(50))
@@ -44,7 +42,5 @@ class BlogEntry(db.Model, SerializerMixin):
         self.message = message
         self.email = email
 
-    def __repr__(self):
-        return "<Name> %r" %self.name
 
     

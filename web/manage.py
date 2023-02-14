@@ -1,9 +1,7 @@
-from flask.cli import FlaskGroup
-
-
 from app import app, db
-from app.models.contact import Contact
-from app.models.contact import BlogEntry
+from flask.cli import FlaskGroup
+from app.models.contact import Contact , BlogEntry
+# from app.models.contact import BlogEntry
 
 
 cli = FlaskGroup(app)
@@ -20,17 +18,12 @@ def seed_db():
     db.session.add(
         Contact(firstname='สมชาย', lastname='ทรงแบด', phone='081-111-1111'))
     db.session.add(
-        BlogEntry(name='chaiwitchit', message='lab 11 create in twitter', email='nmolpoom10788@gmail.com')
-    )
+        BlogEntry(name='chaiwitchit', message='lab 11 create in twitter', email='nmolpoom10788@gmail.com'))
     db.session.add(
-        BlogEntry(name='chaiwitchit', message='It is very difficult.', email='nmolpoom10788@gmail.com')
-    )
+        BlogEntry(name='chaiwitchit', message='It is very difficult', email='nmolpoom10788@gmail.com'))
     db.session.add(
-        BlogEntry(name='chaiwitchit', message='hello world', email='nmolpoom10788@gmail.com')
-    )
-
+        BlogEntry(name='chaiwitchit', message='hello world', email='nmolpoom10788@gmail.com'))
     db.session.commit()
-
 
 
 if __name__ == "__main__":

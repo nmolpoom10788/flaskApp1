@@ -4,7 +4,7 @@ import json
 from sqlalchemy.sql import text
 from app import app
 from app import db
-from app.models.contact import Contact
+from app.models.contact import   Contact ,BlogEntry
 
 
 @app.route('/')
@@ -70,7 +70,6 @@ def lab10_phonebook():
                 contact = Contact.query.get(id_)
                 contact.update(**validated_dict)
 
-
             db.session.commit()
 
 
@@ -106,6 +105,47 @@ def lab10_remove_contacts():
 
 @app.route('/lab11')
 def lab11_microblog():
+    if request.method == 'POST':
+        result = request.form.to_dict()
+        app.logger.debug(str(result))
+        id_ = result.get('id', '')
+        validated = True
+        validated_dict = dict()
+        valid_keys = ['name', 'message', 'email']
+
+
+        # validate the input
+        for key in result:
+            app.logger.debug(key, result[key])
+            # screen of unrelated inputs
+            if key not in valid_keys:
+                continue
+
+
+            value = result[key].strip()
+            if not value or value == 'undefined':
+                validated = False
+                break
+            validated_dict[key] = value
+
+
+        if validated:
+            app.logger.debug('validated dict: ' + str(validated_dict))
+            # if there is no id: create a new contact entry
+            if not id_:
+                entry = BlogEntry(**validated_dict)
+                app.logger.debug(str(entry))
+                db.session.add(entry)
+            # if there is an id already: update the contact entry
+            else:
+                contact = BlogEntry.query.get(id_)
+                contact.update(**validated_dict)
+
+            db.session.commit()
+
+
+        return lab11_db_contacts()
+    return app.send_static_file('lab11_microblog.html')
     return app.send_static_file('lab11_microblog.html')
 
 
@@ -118,3 +158,8 @@ def lab11_db_contacts():
     app.logger.debug("DB Contacts: " + str(blog_entries))
 
     return jsonify(blog_entries)
+
+
+
+    
+
