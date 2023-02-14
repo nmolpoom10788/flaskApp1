@@ -32,6 +32,17 @@ def lab04_bootstrap():
 def crash():
     return 1/0
 
+
+@app.route("/lab10/contacts")
+def lab10_db_contacts():
+    contacts = []
+    db_contacts = Contact.query.all()
+
+    contacts = list(map(lambda x: x.to_dict(), db_contacts))
+    app.logger.debug("DB Contacts: " + str(contacts))
+
+    return jsonify(contacts)
+
 @app.route('/lab10', methods=('GET', 'POST'))
 def lab10_phonebook():
     if request.method == 'POST':
@@ -76,18 +87,6 @@ def lab10_phonebook():
         return lab10_db_contacts()
     return app.send_static_file('lab10_phonebook.html')
 
-@app.route("/lab10/contacts")
-def lab10_db_contacts():
-    contacts = []
-    db_contacts = Contact.query.all()
-
-
-    contacts = list(map(lambda x: x.to_dict(), db_contacts))
-    app.logger.debug("DB Contacts: " + str(contacts))
-
-
-    return jsonify(contacts)
-
 @app.route('/lab10/remove_contact', methods=('GET', 'POST'))
 def lab10_remove_contacts():
     app.logger.debug("LAB10 - REMOVE")
@@ -103,8 +102,21 @@ def lab10_remove_contacts():
             raise
     return lab10_db_contacts()
 
-@app.route('/lab11')
-def lab11_microblog():
+
+
+@app.route("/lab11/contacts")
+def lab11_db_contacts():
+    blog_entries = []
+    db_contacts = BlogEntry.query.all()
+
+    blog_entries = list(map(lambda x: x.to_dict(), db_contacts))
+    app.logger.debug("DB Contacts: " + str(blog_entries))
+
+    return jsonify(blog_entries)
+
+
+@app.route('/lab11', methods=('GET', 'POST'))
+def lab11_micro():
     if request.method == 'POST':
         result = request.form.to_dict()
         app.logger.debug(str(result))
@@ -141,23 +153,13 @@ def lab11_microblog():
                 contact = BlogEntry.query.get(id_)
                 contact.update(**validated_dict)
 
+
             db.session.commit()
 
 
         return lab11_db_contacts()
     return app.send_static_file('lab11_microblog.html')
-    return app.send_static_file('lab11_microblog.html')
 
-
-@app.route("/lab11/contacts")
-def lab11_db_contacts():
-    blog_entries = []
-    db_contacts = BlogEntry.query.all()
-
-    blog_entries = list(map(lambda x: x.to_dict(), db_contacts))
-    app.logger.debug("DB Contacts: " + str(blog_entries))
-
-    return jsonify(blog_entries)
 
 
 

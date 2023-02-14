@@ -8,7 +8,7 @@ class Contact(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(50))
     lastname = db.Column(db.String(50))
-    phone = db.Column(db.String(20))
+    phone = db.Column(db.String(50))
 
     def __init__(self, firstname, lastname, phone):
         self.firstname = firstname
@@ -28,7 +28,7 @@ class BlogEntry(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     message = db.Column(db.String(280))
-    email = db.Column(db.String(20))
+    email = db.Column(db.String(50))
 
 
     def __init__(self, name, message, email):
