@@ -4,8 +4,8 @@ import json
 from sqlalchemy.sql import text
 from app import app
 from app import db
-from app.models.contact import   Contact ,BlogEntry
-
+from app.models.contact import Contact
+from app.models.blogentry import BlogEntry
 
 @app.route('/')
 def home():

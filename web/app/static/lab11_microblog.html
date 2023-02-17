@@ -107,7 +107,11 @@
                   <div class="row tweet-info">
                     <div class="col-md-auto">
                       <span class="tweet-username">${contact_data[i].name}</span>
-                      <span class="tweet-usertag text-muted">${contact_data[i].email}</span>-
+                      <span class="tweet-usertag text-muted">${contact_data[i].email}</span>
+                      <div class="tweet-text">
+                    ${contact_data[i].date_Created}
+                    ${contact_data[i].date_Update}
+                  </div>
                       <span class="tweet-age text-muted">1d</span>
                     </div>
                     <div class="col tweet-arrow text-muted">
@@ -123,6 +127,7 @@
                   <div class="tweet-media">
                     pictures or videos
                   </div>
+                  
                   <div class="row text-muted">
                     <div class="col-md-2"><span class="oi oi-bullhorn"></span></div>
                     <div class="col-md-2"><span class="oi oi-loop-circular"></span></div>
