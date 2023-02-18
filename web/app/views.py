@@ -160,6 +160,30 @@ def lab11_micro():
         return lab11_db_contacts()
     return app.send_static_file('lab11_microblog.html')
 
+@app.route('/lab11/remove_contact', methods=('GET', 'POST'))
+def lab11_remove_contacts():
+    app.logger.debug("LAB11 - REMOVE")
+    if request.method == 'POST':
+        result = request.form.to_dict()
+        id_ = result.get('id', '')
+        try:
+            contact = BlogEntry.query.get(id_)
+            db.session.delete(contact)
+            db.session.commit()
+        except Exception as ex:
+            app.logger.debug(ex)
+            raise
+    return lab11_db_contacts()
+
+@app.route('/lab11/edit', methods=['POST'])
+def lab11_edit():
+    id = request.form.get('id')
+    new_message = request.form.get('message')
+    item = BlogEntry.query.get(id)
+    item.message = new_message
+    db.session.commit()
+    return jsonify(success=True)
+
 
 
 

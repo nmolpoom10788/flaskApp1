@@ -11,10 +11,17 @@
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   
   <link rel="stylesheet" href="static/css/open-iconic-bootstrap.css">
-  <link rel="stylesheet" href="static/css/mytwitter.css">
+  <link rel="stylesheet" href="static/css/lab11twitter.css">
   <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <!-- delete icon -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href='https://css.gg/backspace.css' rel='stylesheet'>
+
+    <!-- edid icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <title>My Twitter</title>
 </head>
 
@@ -29,7 +36,7 @@
       </div>
       <form class="form-inline">
         <input class="form-control" id="nav-search" type="search" placeholder="Search Twitter"> &nbsp;
-        <img class="tw-user-small rounded-circle" src="static/img/S__22249631.jpg"> &nbsp;
+        <img class="tw-user-small rounded-circle" src="static/img/poo.jpg"> &nbsp;
         <button class="btn" id="nav-tweet-btn" type="submit">Tweet</button>
       </form>
     </div>
@@ -47,7 +54,7 @@
             <div class="new-tweet-row">
               <div class="row">
                 <div class="col-md-2">
-                  <img src="static/img/newpi.jpg" class="tw-user-small rounded-circle mx-auto d-block">
+                  <img src="static/img/poo.jpg" class="tw-user-small rounded-circle mx-auto d-block">
                 </div>
                 <div class="col-md-9">
                   <form id="addPhoneNumberForm">
@@ -56,10 +63,10 @@
                     <input type="input" id="firstname" name="name" placeholder="Your name.." required><br>
                     <label for="lastname">email</label><br>
 
-                    <input type="input" id="lastname" name="email" placeholder="Your last name.." required><br>
+                    <input type="input" id="lastname" name="email" placeholder="email" required><br>
                     <label for="phone">Messages</label><br>
 
-                    <input type="input" id="phone" name="message" placeholder="Your phone number.." required><br>
+                    <input type="input" id="phone" name="message" placeholder="message" required><br>
                     <input type="hidden" id="entryid" name="id" value=""><br>
                     <input type="submit" name="submit" value="Submit">
   
@@ -97,11 +104,13 @@
           for ( var i = contact_data.length - 1 ; i >= 0 ; i--){
             
             var elamant = document.getElementById("BoxMessages");
-            var Boxshow = `<div class="tweet">
+            var Boxshow = `<div class="tweet"
+            data-id="${contact_data[i].id}">
+
               
               <div class="row">
                 <div class="col-md-2 text-center">
-                  <img class="tw-user-medium rounded-circle" src="static/img/newpi.jpg">
+                  <img class="tw-user-medium rounded-circle" src="static/img/poo.jpg">
                 </div>
                 <div class="col-md-10">
                   <div class="row tweet-info">
@@ -110,22 +119,25 @@
                       <span class="tweet-usertag text-muted">${contact_data[i].email}</span>
                       <div class="tweet-text">
                     ${contact_data[i].date_Created}
-                    ${contact_data[i].date_Update}
                   </div>
-                      <span class="tweet-age text-muted">1d</span>
+                    
                     </div>
+                    
                     <div class="col tweet-arrow text-muted">
-                      <span class="oi oi-arrow-thick-bottom float-right"></span>
+                      <i class="gg-backspace" onclick="removeItem(${contact_data[i].id})"></i> 
+                      <i class="fa fa-edit" onclick="editItem(${contact_data[i].id})"></i>
                     </div>
+
+
                   </div>
                   <div class="tweet-text">
                     ${contact_data[i].message}
                   </div>
+        
                   <div class="tweet-media">
-                    <img class="img-fluid rounded" src="static/img/newpi.jpg">
-                  </div>
-                  <div class="tweet-media">
-                    pictures or videos
+                    <input type="input" id="popup${contact_data[i].id}" name="updatemessage" style="display:none" placeholder="message" required><br>
+                    <input type="submit" id="save" style="visibility:hidden" value="Save">
+            
                   </div>
                   
                   <div class="row text-muted">
@@ -153,6 +165,46 @@
       populate_table(contact_data);
     }
 
+    function removeItem(row) {
+      if (!confirm("Delete " + '?')) {
+        return false;
+      }
+      var url = "lab11/remove_contact"
+      var formData = { 'id': row };
+      $.post(url, formData, function (contact_data) {
+        refresh_table(contact_data);
+      });
+    }
+
+    function editItem(row) {
+      if (!confirm("Edit Now " + '?')) {
+        return false;
+      }
+      var popup = document.getElementById("popup"+ row)
+      popup.style.display = "block"
+      var saveup = document.getElementById("save")
+      saveup.style.visibility = "visible"
+
+    }
+    $(document).on('click', '#save', function () {
+                var card = $(this).closest('.tweet');
+                var id = card.data('id');
+                var new_message = $('input[name=updatemessage]').val();
+                console.log(new_message);
+                console.log(id);
+                $.ajax({
+                    type: 'POST',
+                    url: '/lab11/edit',
+                    data: { id: id, message: new_message },
+                    success: function (response) {
+                      $.getJSON("lab11/contacts", function (data) {
+                            refresh_table(data);
+                        });
+                    }
+                });
+
+            });
+
     $("#addPhoneNumberForm").submit(function (event) {
       // prevent default html form submission action
       event.preventDefault();
@@ -178,9 +230,19 @@
       // make a POST call to the back end w/ a callback to refresh the table
       $.post(url, formData, function (contact_data) {
         refresh_table(contact_data);
-        clearForm();
+        $('input[name=name]').val('');
+        $('input[name=email]').val('');
+        $('input[name=message]').val('');
       });
     });
+
+    function thailandLocalDate() {
+            var date = new Date();
+            var offset = date.getTimezoneOffset();
+            var thailandTime = new Date(date.getTime() + (420 + offset) * 60 * 1000);
+            var thailandTimeString = thailandTime.toLocaleString();
+            return thailandTimeString;
+        }
       </script>
 </body>
 
