@@ -123,7 +123,7 @@ def lab11_micro():
         id_ = result.get('id', '')
         validated = True
         validated_dict = dict()
-        valid_keys = ['name', 'message', 'email']
+        valid_keys = ['name', 'message', 'email','date_Created','date_Update']
 
 
         # validate the input
@@ -179,8 +179,10 @@ def lab11_remove_contacts():
 def lab11_edit():
     id = request.form.get('id')
     new_message = request.form.get('message')
+    updatetime = request.form.get('date_Update')
     item = BlogEntry.query.get(id)
     item.message = new_message
+    item.date_Update = updatetime
     db.session.commit()
     return jsonify(success=True)
 

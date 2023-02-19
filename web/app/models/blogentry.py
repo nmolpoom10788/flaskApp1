@@ -1,13 +1,15 @@
 from app import db
 from sqlalchemy_serializer import SerializerMixin
-import datetime
+# import datetime
 
 
-thailand_offset = datetime.timedelta(hours=7)
+# thailand_offset = datetime.timedelta(hours=7)
 
-thailand_datetime = datetime.datetime.now(datetime.timezone(thailand_offset))
+# thailand_datetime = datetime.datetime.now(datetime.timezone(thailand_offset))
 
-formatted_datetime = thailand_datetime.strftime("%m/%d/%Y, %I:%M:%S %p")
+# formatted_datetime = thailand_datetime.strftime("%m/%d/%Y, %I:%M:%S %p")
+
+
 
 class BlogEntry(db.Model, SerializerMixin):
     __tablename__ = "blog_entries"
@@ -22,17 +24,17 @@ class BlogEntry(db.Model, SerializerMixin):
     date_Update = db.Column(db.String(50))
 
     
-    def __init__(self, name, message, email):
+    def __init__(self, name, message, email,date_Created,date_Update ):
         self.name = name
         self.message = message
         self.email = email
-        self.date_Created = formatted_datetime
-        self.date_Update = formatted_datetime
+        self.date_Created = date_Created
+        self.date_Update = date_Update
 
 
-    def update(self, name, message, email):
+    def update(self, name, message, email, date_Created,date_Update):
         self.name = name
         self.message = message 
         self.email = email
-        self.date_Created = formatted_datetime
-        self.date_Update = formatted_datetime
+        self.date_Created = date_Created
+        self.date_Update = date_Update

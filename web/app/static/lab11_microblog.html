@@ -66,10 +66,9 @@
                     <input type="input" id="lastname" name="email" placeholder="email" required><br>
                     <label for="phone">Messages</label><br>
 
-                    <input type="input" id="phone" name="message" placeholder="message" required><br>
+                    <textarea id="phone" name="message" placeholder="message" required></textarea>
                     <input type="hidden" id="entryid" name="id" value=""><br>
-                    <input type="submit" name="submit" value="Submit">
-  
+                    <input class="postt" type="submit" name="submit" value="Post">
                   </form>
                 </div>
               </div>
@@ -118,25 +117,21 @@
                       <span class="tweet-username">${contact_data[i].name}</span>
                       <span class="tweet-usertag text-muted">${contact_data[i].email}</span>
                       <div class="tweet-text">
-                    ${contact_data[i].date_Created}
+                    ${contact_data[i].date_Created}<br>
+                    ${contact_data[i].date_Update}
                   </div>
                     
                     </div>
                     
-                    <div class="col tweet-arrow text-muted">
-                      <i class="gg-backspace" onclick="removeItem(${contact_data[i].id})"></i> 
-                      <i class="fa fa-edit" onclick="editItem(${contact_data[i].id})"></i>
-                    </div>
-
-
                   </div>
                   <div class="tweet-text">
                     ${contact_data[i].message}
+
                   </div>
         
                   <div class="tweet-media">
-                    <input type="input" id="popup${contact_data[i].id}" name="updatemessage" style="display:none" placeholder="message" required><br>
-                    <input type="submit" id="save" style="visibility:hidden" value="Save">
+                    <textarea type="input" id="popup${contact_data[i].id}" name="updatemessage${contact_data[i].id}" style="display:none" placeholder="message" required></textarea><br>
+                    <input type="submit" id="save${contact_data[i].id}" onclick="getid(${contact_data[i].id})" style="visibility:hidden" value="Save">
             
                   </div>
                   
@@ -145,6 +140,9 @@
                     <div class="col-md-2"><span class="oi oi-loop-circular"></span></div>
                     <div class="col-md-2"><span class="oi oi-heart"></span></div>
                     <div class="col-md-2"><span class="oi oi-envelope-open"></span></div>
+                    <div class="col-md-2"><i class="gg-backspace" onclick="removeItem(${contact_data[i].id})"></i> </div>
+                    <div class="col-md-2"><i class="fa fa-edit" onclick="editItem(${contact_data[i].id})"></i> </div>
+                    
                   </div>
                 </div>
               </div>
@@ -176,26 +174,16 @@
       });
     }
 
-    function editItem(row) {
-      if (!confirm("Edit Now " + '?')) {
-        return false;
-      }
-      var popup = document.getElementById("popup"+ row)
-      popup.style.display = "block"
-      var saveup = document.getElementById("save")
-      saveup.style.visibility = "visible"
-
-    }
-    $(document).on('click', '#save', function () {
-                var card = $(this).closest('.tweet');
-                var id = card.data('id');
-                var new_message = $('input[name=updatemessage]').val();
+    function getid(i)
+    { console.log(i)
+      $(document).on('click', '#save'+ i , function () {
+                var new_message = document.getElementById("popup"+i).value;
                 console.log(new_message);
-                console.log(id);
+                // console.log(id);
                 $.ajax({
                     type: 'POST',
                     url: '/lab11/edit',
-                    data: { id: id, message: new_message },
+                    data: { id: i , message: new_message ,date_Update:thailandLocalDate() },
                     success: function (response) {
                       $.getJSON("lab11/contacts", function (data) {
                             refresh_table(data);
@@ -204,7 +192,19 @@
                 });
 
             });
+    }
 
+    function editItem(row) {
+      if (!confirm("Edit Now " + '?')) {
+        return false;
+      }
+      var popup = document.getElementById("popup"+ row)
+      popup.style.display = "block"
+      var saveup = document.getElementById("save"+ row)
+      saveup.style.visibility = "visible"
+
+    }
+   
     $("#addPhoneNumberForm").submit(function (event) {
       // prevent default html form submission action
       event.preventDefault();
@@ -222,7 +222,8 @@
         }
       });
 
-
+      formData["date_Created"]=thailandLocalDate();
+      formData["date_Update"]=thailandLocalDate();
       var $form = $(this);
       var url = $form.attr("action");
 
@@ -232,7 +233,7 @@
         refresh_table(contact_data);
         $('input[name=name]').val('');
         $('input[name=email]').val('');
-        $('input[name=message]').val('');
+        $('textarea[name=message]').val('');
       });
     });
 
