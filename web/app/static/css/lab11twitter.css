@@ -23,19 +23,24 @@ img.tw-user-medium {
  
 #nav-tweet-btn {
     border-radius: 20px;
-    background-color: #67b1f9;
+    background-color: #056aee;
     color: #ffffff;
 }
 
 .content-box {
     background-color: #ffffff;
     margin-bottom : 10px;
+    border: 1px solid rgb(177, 166, 166);
+    border-right: 1px solid rgb(177, 166, 166);
+    border-bottom: 1px solid rgb(177, 166, 166);
+
 }
 
 .new-tweet-row {
-    background-color: #eaf5fe;
+    background-color: #c6cace;
     padding-top: 10px;
     padding-bottom: 10px;
+    position: relative;
 }
 
 .tweet {
@@ -58,9 +63,54 @@ img.tw-user-medium {
     padding-right: 10px;
 }
 
-.postt{
-    background-color: #3897e4;
-    padding-top: 10px;
-    padding-bottom: 10px;
+
+.inputbox input{
+    width: 100%;
+    background:rgb(200, 208, 216);
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    border-radius: 35px;
+    border: 1px solid rgb(177, 166, 166);
+    border-right: 1px solid rgb(177, 166, 166);
+    border-bottom: 1px solid rgb(177, 166, 166);
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: #ffffff;
+    box-shadow: 0 5px 15px rgb(122, 122, 122);
+}
+.inputbox textarea{
+    width: 100%;
+    background:rgb(191, 201, 211);
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    border-radius: 35px;
+    border: 1px solid rgb(177, 166, 166);
+    border-right: 1px solid rgb(177, 166, 166);
+    border-bottom: 1px solid rgb(177, 166, 166);
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: #ffffff;
+    box-shadow: 0 5px 15px rgb(122, 122, 122);
+}
+.inputbox{
+    width:  100%;
+    margin-top:10px;
 }
 
+.inputbox input::placeholder{
+    color: #ffffff;
+}
+.inputbox textarea::placeholder{
+    color: #ffffff;
+}
+
+.inputbox input[type="submit"]{
+    background: #5195ee;
+    color: #ffffff;
+    max-width: 100px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-weight: 600;
+}

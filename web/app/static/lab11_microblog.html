@@ -9,19 +9,19 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  
+
   <link rel="stylesheet" href="static/css/open-iconic-bootstrap.css">
   <link rel="stylesheet" href="static/css/lab11twitter.css">
   <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
-    <!-- delete icon -->
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href='https://css.gg/backspace.css' rel='stylesheet'>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+  <!-- delete icon -->
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href='https://css.gg/backspace.css' rel='stylesheet'>
 
-    <!-- edid icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- edid icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <title>My Twitter</title>
 </head>
 
@@ -58,25 +58,27 @@
                 </div>
                 <div class="col-md-9">
                   <form id="addPhoneNumberForm">
-                    <label for="firstname">name</label><br>
-
-                    <input type="input" id="firstname" name="name" placeholder="Your name.." required><br>
-                    <label for="lastname">email</label><br>
-
-                    <input type="input" id="lastname" name="email" placeholder="email" required><br>
-                    <label for="phone">Messages</label><br>
-
-                    <textarea id="phone" name="message" placeholder="message" required></textarea>
+                    <div class="inputbox">
+                      <input type="input" id="name" name="name" placeholder="Your name.." required>
+                    </div>
+                    <div class="inputbox">
+                      <input type="email" id="email" name="email" placeholder="email" required>
+                    </div>
+                    <div class="inputbox">
+                      <textarea id="messagebox" name="message" placeholder="What's happening" required></textarea>
+                    </div>
                     <input type="hidden" id="entryid" name="id" value=""><br>
-                    <input class="postt" type="submit" name="submit" value="Post">
+                    <div class="inputbox">
+                    <input type="submit" name="submit" value="Post">
+                    </div>
                   </form>
                 </div>
               </div>
             </div>
-          <div id = "BoxMessages">
-            
+            <div id="BoxMessages">
+
+            </div>
           </div>
-        </div>
         </div>
 
       </div>
@@ -96,14 +98,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"></script> -->
-      <script>
+    <script>
 
-        function populate_table(contact_data) {
-          
-          for ( var i = contact_data.length - 1 ; i >= 0 ; i--){
-            
-            var elamant = document.getElementById("BoxMessages");
-            var Boxshow = `<div class="tweet"
+      function populate_table(contact_data) {
+
+        for (var i = contact_data.length - 1; i >= 0; i--) {
+
+          var elamant = document.getElementById("BoxMessages");
+          var Boxshow = `<div class="tweet"
             data-id="${contact_data[i].id}">
 
               
@@ -149,102 +151,102 @@
             </div>`;
 
           $("#BoxMessages").append((Boxshow));
+        }
+      }
+
+      $(document).ready(function () {
+        (function () {
+          $.getJSON("lab11/contacts", populate_table);
+        })();
+      });
+
+      function refresh_table(contact_data) {
+        $('#BoxMessages').empty();
+        populate_table(contact_data);
+      }
+
+      function removeItem(row) {
+        if (!confirm("Delete " + '?')) {
+          return false;
+        }
+        var url = "lab11/remove_contact"
+        var formData = { 'id': row };
+        $.post(url, formData, function (contact_data) {
+          refresh_table(contact_data);
+        });
+      }
+
+      function getid(i) {
+        console.log(i)
+        $(document).on('click', '#save' + i, function () {
+          var new_message = document.getElementById("popup" + i).value;
+          console.log(new_message);
+          // console.log(id);
+          $.ajax({
+            type: 'POST',
+            url: '/lab11/edit',
+            data: { id: i, message: new_message, date_Update: thailandLocalDate() },
+            success: function (response) {
+              $.getJSON("lab11/contacts", function (data) {
+                refresh_table(data);
+              });
+            }
+          });
+
+        });
+      }
+
+      function editItem(row) {
+        if (!confirm("Edit Now " + '?')) {
+          return false;
+        }
+        var popup = document.getElementById("popup" + row)
+        popup.style.display = "block"
+        var saveup = document.getElementById("save" + row)
+        saveup.style.visibility = "visible"
+
+      }
+
+      $("#addPhoneNumberForm").submit(function (event) {
+        // prevent default html form submission action
+        event.preventDefault();
+
+
+        // pack the inputs into a dictionary
+        var formData = {};
+        $(":input").each(function () {
+          var key = $(this).attr('name');
+          var val = $(this).val();
+
+
+          if (key != 'submit') {
+            formData[key] = val;
           }
-        }
+        });
 
-    $(document).ready(function () {
-      (function () {
-        $.getJSON("lab11/contacts", populate_table);
-      })();
-    });
+        formData["date_Created"] = thailandLocalDate();
+        formData["date_Update"] = thailandLocalDate();
+        var $form = $(this);
+        var url = $form.attr("action");
 
-    function refresh_table(contact_data) {
-      $('#BoxMessages').empty();
-      populate_table(contact_data);
-    }
 
-    function removeItem(row) {
-      if (!confirm("Delete " + '?')) {
-        return false;
+        // make a POST call to the back end w/ a callback to refresh the table
+        $.post(url, formData, function (contact_data) {
+          refresh_table(contact_data);
+          $('input[name=name]').val('');
+          $('input[name=email]').val('');
+          $('textarea[name=message]').val('');
+        });
+      });
+
+      function thailandLocalDate() {
+        var date = new Date();
+        var offset = date.getTimezoneOffset();
+        var thailandTime = new Date(date.getTime() + (420 + offset) * 60 * 1000);
+        var thailandTimeString = thailandTime.toLocaleString();
+        return thailandTimeString;
       }
-      var url = "lab11/remove_contact"
-      var formData = { 'id': row };
-      $.post(url, formData, function (contact_data) {
-        refresh_table(contact_data);
-      });
-    }
-
-    function getid(i)
-    { console.log(i)
-      $(document).on('click', '#save'+ i , function () {
-                var new_message = document.getElementById("popup"+i).value;
-                console.log(new_message);
-                // console.log(id);
-                $.ajax({
-                    type: 'POST',
-                    url: '/lab11/edit',
-                    data: { id: i , message: new_message ,date_Update:thailandLocalDate() },
-                    success: function (response) {
-                      $.getJSON("lab11/contacts", function (data) {
-                            refresh_table(data);
-                        });
-                    }
-                });
-
-            });
-    }
-
-    function editItem(row) {
-      if (!confirm("Edit Now " + '?')) {
-        return false;
-      }
-      var popup = document.getElementById("popup"+ row)
-      popup.style.display = "block"
-      var saveup = document.getElementById("save"+ row)
-      saveup.style.visibility = "visible"
-
-    }
-   
-    $("#addPhoneNumberForm").submit(function (event) {
-      // prevent default html form submission action
-      event.preventDefault();
-
-
-      // pack the inputs into a dictionary
-      var formData = {};
-      $(":input").each(function () {
-        var key = $(this).attr('name');
-        var val = $(this).val();
-
-
-        if (key != 'submit') {
-          formData[key] = val;
-        }
-      });
-
-      formData["date_Created"]=thailandLocalDate();
-      formData["date_Update"]=thailandLocalDate();
-      var $form = $(this);
-      var url = $form.attr("action");
-
-
-      // make a POST call to the back end w/ a callback to refresh the table
-      $.post(url, formData, function (contact_data) {
-        refresh_table(contact_data);
-        $('input[name=name]').val('');
-        $('input[name=email]').val('');
-        $('textarea[name=message]').val('');
-      });
-    });
-
-    function thailandLocalDate() {
-            var date = new Date();
-            var offset = date.getTimezoneOffset();
-            var thailandTime = new Date(date.getTime() + (420 + offset) * 60 * 1000);
-            var thailandTimeString = thailandTime.toLocaleString();
-            return thailandTimeString;
-        }
-      </script>
+    </script>
 </body>
 
 </html>
