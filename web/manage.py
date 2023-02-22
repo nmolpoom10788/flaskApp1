@@ -1,7 +1,9 @@
 from app import app, db
 from flask.cli import FlaskGroup
+from werkzeug.security import generate_password_hash
 from app.models.contact import Contact
 from app.models.blogentry import BlogEntry
+from app.models.authuser import AuthUser
 import datetime
 
 
@@ -26,9 +28,12 @@ def seed_db():
         Contact(firstname='สมชาย', lastname='ทรงแบด', phone='081-111-1111'))
     db.session.add(
         BlogEntry(name='chaiwitchit', message='lab 11 create in twitter', email='nmolpoom10788@gmail.com',date_Created=formatted_datetime,date_Update="asdsdasd"))
-    #     BlogEntry(name='chaiwitchit', message='It is very difficult', email='nmolpoom10788@gmail.com'))
-    # db.session.add(
-    #     BlogEntry(name='chaiwitchit', message='hello world', email='nmolpoom10788@gmail.com'))
+    db.session.add(AuthUser(email="flask@204212", name='สมชาย ทรงแบด',
+                            password=generate_password_hash('1234',
+                                                            method='sha256'),
+                            avatar_url='https://ui-avatars.com/api/?name=\
+สมชาย+ทรงแบด&background=83ee03&color=fff'))
+
     db.session.commit()
 
 
