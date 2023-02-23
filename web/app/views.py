@@ -1,20 +1,29 @@
 from flask import (jsonify, render_template,
-                   request, url_for, flash, redirect)
-
-from werkzeug.security import check_password_hash
-from werkzeug.urls import url_pars
-
-import json
-
+                  request, url_for, flash, redirect)
+from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.urls import url_parse
 from sqlalchemy.sql import text
-from flask_login import login_user
+from flask_login import login_user, login_required, logout_user, current_user
+
 
 from app import app
 from app import db
 from app import login_manager
+
+
 from app.models.contact import Contact
-from app.models.blogentry import BlogEntry
-from app.models.authuser import AuthUser
+from app.models.authuser import AuthUser, PrivateContact
+
+# import json
+# from app.models.blogentry import BlogEntry
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    # since the user_id is just the primary key of our
+    # user table, use it in the query for the user
+    return AuthUser.query.get(int(user_id))
+
 
 @app.route('/')
 def home():
@@ -43,8 +52,13 @@ def crash():
 
 # lab10--------------------------------------------------------------------------------------------------------------------
 @app.route("/lab10/contacts")
+@login_required
 def lab10_db_contacts():
+        # db_contacts = Contact.query.all()
+    db_contacts = PrivateContact.query.filter(
+        PrivateContact.owner_id == current_user.id)
     contacts = []
+
     db_contacts = Contact.query.all()
 
     contacts = list(map(lambda x: x.to_dict(), db_contacts))
@@ -80,15 +94,19 @@ def lab10_phonebook():
 
         if validated:
             app.logger.debug('validated dict: ' + str(validated_dict))
-            # if there is no id: create a new contact entry
+            # if there is no id_: create contact
             if not id_:
-                entry = Contact(**validated_dict)
+                validated_dict['owner_id'] = current_user.id
+                # entry = Contact(**validated_dict)
+                entry = PrivateContact(**validated_dict)
                 app.logger.debug(str(entry))
                 db.session.add(entry)
-            # if there is an id already: update the contact entry
+            # if there is an id_ already: update contact
             else:
-                contact = Contact.query.get(id_)
-                contact.update(**validated_dict)
+                # contact = Contact.query.get(id_)
+                contact = PrivateContact.query.get(id_)
+                if contact.owner_id == current_user.id:
+                    contact.update(**validated_dict)
 
             db.session.commit()
 
@@ -199,16 +217,19 @@ def lab11_edit():
 # lab12--------------------------------------------------------------------------------------------------------------------
 @app.route('/lab12')
 def lab12_index():
-   return render_template('lab12/index.html')
+   return 'Lab12'
 
 
 
 @app.route('/lab12/profile')
+@login_required
 def lab12_profile():
-   return render_template('lab12/profile.html')
+    return render_template('lab12/profile.html')
 
 
-@app.route('/lab12/login'methods=('GET', 'POST'))
+
+
+@app.route('/lab12/login', methods=('GET', 'POST'))
 def lab12_login():
     if request.method == 'POST':
         # login code goes here
@@ -236,25 +257,96 @@ def lab12_login():
             next_page = url_for('lab12_profile')
         return redirect(next_page)
 
+
     return render_template('lab12/login.html')
 
 
 
 
-@app.route('/lab12/signup')
+
+@app.route('/lab12/signup', methods=('GET', 'POST'))
 def lab12_signup():
-   return render_template('/lab12/signup.html')
+    if request.method == 'POST':
+        result = request.form.to_dict()
+        app.logger.debug(str(result))
+ 
+        validated = True
+        validated_dict = {}
+        valid_keys = ['email', 'name', 'password']
+
+
+        # validate the input
+        for key in result:
+            app.logger.debug(str(key)+": " + str(result[key]))
+            # screen of unrelated inputs
+            if key not in valid_keys:
+                continue
+
+
+            value = result[key].strip()
+            if not value or value == 'undefined':
+                validated = False
+                break
+            validated_dict[key] = value
+            # code to validate and add user to database goes here
+        app.logger.debug("validation done")
+        if validated:
+            app.logger.debug('validated dict: ' + str(validated_dict))
+            email = validated_dict['email']
+            name = validated_dict['name']
+            password = validated_dict['password']
+            # if this returns a user, then the email already exists in database
+            user = AuthUser.query.filter_by(email=email).first()
+
+
+            if user:
+                # if a user is found, we want to redirect back to signup
+                # page so user can try again
+                flash('Email address already exists')
+                return redirect(url_for('lab12_signup'))
+
+
+            # create a new user with the form data. Hash the password so
+            # the plaintext version isn't saved.
+            app.logger.debug("preparing to add")
+            avatar_url = gen_avatar_url(email, name)
+            new_user = AuthUser(email=email, name=name,
+                                password=generate_password_hash(
+                                    password, method='sha256'),
+                                avatar_url=avatar_url)
+            # add the new user to the database
+            db.session.add(new_user)
+            db.session.commit()
+
+
+        return redirect(url_for('lab12_login'))
+    return render_template('lab12/signup.html')
+
+
+def gen_avatar_url(email, name):
+    bgcolor = generate_password_hash(email, method='sha256')[-6:]
+    color = hex(int('0xffffff', 0) -
+                int('0x'+bgcolor, 0)).replace('0x', '')
+    lname = ''
+    temp = name.split()
+    fname = temp[0][0]
+    if len(temp) > 1:
+        lname = temp[1][0]
+
+
+    avatar_url = "https://ui-avatars.com/api/?name=" + \
+        fname + "+" + lname + "&background=" + \
+        bgcolor + "&color=" + color
+    return avatar_url
+
 
 
 @ app.route('/lab12/logout')
+@login_required
 def lab12_logout():
-   return render_template('lab12/logout.html')
+    logout_user()
+    return redirect(url_for('lab12_index'))
 
-@login_manager.user_loader
-def load_user(user_id):
-    # since the user_id is just the primary key of our
-    # user table, use it in the query for the user
-    return AuthUser.query.get(int(user_id))
 
 
     
