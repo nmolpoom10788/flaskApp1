@@ -115,13 +115,18 @@ def lab10_phonebook():
 @app.route('/lab10/remove_contact', methods=('GET', 'POST'))
 @login_required
 def lab10_remove_contacts():
+    result = request.form.to_dict()
+    app.logger.debug(str(result))
+    id_ = result.get('id', '')
+    validated = True
+    validated_dict = dict()
     app.logger.debug("LAB10 - REMOVE")
     if request.method == 'POST':
-        result = request.form.to_dict()
         id_ = result.get('id', '')
+        validated_dict['owner_id'] = current_user.id
         try:
+            contact = PrivateContact.query.get(id_)
             if contact.owner_id == current_user.id:
-                contact = PrivateContact.query.get(id_)
                 db.session.delete(contact)
                 db.session.commit()
         except Exception as ex:
@@ -349,5 +354,4 @@ def lab12_logout():
 
 
 
-    
-
+# lab13--------------------------------------------------------------------------------------------------------------------
