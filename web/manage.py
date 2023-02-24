@@ -26,19 +26,19 @@ def create_db():
 @cli.command("seed_db")
 def seed_db():
     # LAB12
-        db.session.add(AuthUser(email="flask@204212", name='สมชาย ทรงแบด',
+    db.session.add(AuthUser(email="flask@204212", name='สมชาย ทรงแบด',
                             password=generate_password_hash('1234',
                                                             method='sha256'),
                             avatar_url='https://ui-avatars.com/api/?name=\
 สมชาย+ทรงแบด&background=83ee03&color=fff'))
+    db.session.add(PrivateContact(firstname='ส้มโอ', lastname='โอเค',
+                      phone='081-111-1112', owner_id=1))
     db.session.add(
         Contact(firstname='สมชาย', lastname='ทรงแบด', phone='081-111-1111'))
     db.session.add(
         BlogEntry(name='chaiwitchit', message='lab 11 create in twitter', email='nmolpoom10788@gmail.com',date_Created=formatted_datetime,date_Update="asdsdasd"))
     # LAB12
-    db.session.add(
-       PrivateContact(firstname='ส้มโอ', lastname='โอเค',
-                      phone='081-111-1112', owner_id=1))
+
     db.session.commit()
 
 

@@ -59,8 +59,6 @@ def lab10_db_contacts():
         PrivateContact.owner_id == current_user.id)
     contacts = []
 
-    db_contacts = Contact.query.all()
-
     contacts = list(map(lambda x: x.to_dict(), db_contacts))
     app.logger.debug("DB Contacts: " + str(contacts))
 
@@ -112,16 +110,17 @@ def lab10_phonebook():
 
 
         return lab10_db_contacts()
-    return app.send_static_file('lab10_phonebook.html')
+    return render_template('lab10_phonebook.html')
 
 @app.route('/lab10/remove_contact', methods=('GET', 'POST'))
+@login_required
 def lab10_remove_contacts():
     app.logger.debug("LAB10 - REMOVE")
     if request.method == 'POST':
         result = request.form.to_dict()
         id_ = result.get('id', '')
         try:
-            contact = Contact.query.get(id_)
+            contact = PrivateContact.query.get(id_)
             db.session.delete(contact)
             db.session.commit()
         except Exception as ex:
@@ -217,7 +216,7 @@ def lab11_edit():
 # lab12--------------------------------------------------------------------------------------------------------------------
 @app.route('/lab12')
 def lab12_index():
-   return 'Lab12'
+   return render_template('lab12/index.html')
 
 
 
