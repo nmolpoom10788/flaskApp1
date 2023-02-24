@@ -120,9 +120,10 @@ def lab10_remove_contacts():
         result = request.form.to_dict()
         id_ = result.get('id', '')
         try:
-            contact = PrivateContact.query.get(id_)
-            db.session.delete(contact)
-            db.session.commit()
+            if contact.owner_id == current_user.id:
+                contact = PrivateContact.query.get(id_)
+                db.session.delete(contact)
+                db.session.commit()
         except Exception as ex:
             app.logger.debug(ex)
             raise
