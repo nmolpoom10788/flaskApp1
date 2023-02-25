@@ -36,8 +36,9 @@
       </div>
       <form class="form-inline">
         <input class="form-control" id="nav-search" type="search" placeholder="Search Twitter"> &nbsp;
-        <img class="tw-user-small rounded-circle" src="static/img/poo.jpg"> &nbsp;
+        <img class="tw-user-small rounded-circle" src={{ current_user.avatar_url }}> &nbsp;
         <button class="btn" id="nav-tweet-btn" type="submit">Tweet</button>
+        <button id="logout" type="button">Logout</button>
       </form>
     </div>
   </nav>
@@ -52,18 +53,22 @@
         <div class="content-box">
           <div class="new-tweet-row">
             <div class="new-tweet-row">
+              {% if current_user.is_authenticated %}
               <div class="row">
                 <div class="col-md-2">
-                  <img src="static/img/poo.jpg" class="tw-user-small rounded-circle mx-auto d-block">
+                  <img src={{ current_user.avatar_url }} class="tw-user-small rounded-circle mx-auto d-block">
                 </div>
                 <div class="col-md-9">
                   <form id="addPhoneNumberForm">
-                    <div class="inputbox">
+                    <!-- <div class="inputbox">
                       <input type="input" id="name" name="name" placeholder="Your name.." required>
                     </div>
                     <div class="inputbox">
                       <input type="email" id="email" name="email" placeholder="email" required>
-                    </div>
+                    </div> -->
+                    <input type="hidden" id="user-name" value="{{ current_user.name }}">
+                    <input type="hidden" id="user-email" value="{{ current_user.email }}">
+                    <input type="hidden" id="user-avatar" value="{{ current_user.avatar_url }}">
                     <div class="inputbox">
                       <textarea id="messagebox" name="message" placeholder="What's happening" required></textarea>
                     </div>
@@ -74,6 +79,7 @@
                   </form>
                 </div>
               </div>
+              {% endif %}
             </div>
             <div id="BoxMessages">
 
@@ -107,17 +113,17 @@
           var elamant = document.getElementById("BoxMessages");
           var Boxshow = `<div class="tweet"
             data-id="${contact_data[i].id}">
-
+            
               
               <div class="row">
                 <div class="col-md-2 text-center">
-                  <img class="tw-user-medium rounded-circle" src="static/img/poo.jpg">
+                  <img class="tw-user-medium rounded-circle" src=${contact_data[i].avatar_url}>
                 </div>
                 <div class="col-md-10">
                   <div class="row tweet-info">
                     <div class="col-md-auto">
-                      <span class="tweet-username">${contact_data[i].name}</span>
-                      <span class="tweet-usertag text-muted">${contact_data[i].email}</span>
+                      <span class="tweet-username" id="checkname${i}">${contact_data[i].name}</span>
+                      <span class="tweet-usertag text-muted" id="checkemail${i}">${contact_data[i].email}</span>
                       <div class="tweet-text">
                     ${contact_data[i].date_Created}<br>
                     ${contact_data[i].date_Update}
@@ -136,14 +142,14 @@
                     <input type="submit" id="save${contact_data[i].id}" onclick="getid(${contact_data[i].id})" style="visibility:hidden" value="Save">
             
                   </div>
-                  
+
                   <div class="row text-muted">
                     <div class="col-md-2"><span class="oi oi-bullhorn"></span></div>
                     <div class="col-md-2"><span class="oi oi-loop-circular"></span></div>
                     <div class="col-md-2"><span class="oi oi-heart"></span></div>
                     <div class="col-md-2"><span class="oi oi-envelope-open"></span></div>
-                    <div class="col-md-2"><i class="gg-backspace" onclick="removeItem(${contact_data[i].id})"></i> </div>
-                    <div class="col-md-2"><i class="fa fa-edit" onclick="editItem(${contact_data[i].id})"></i> </div>
+                    <div class="col-md-2"><i class="fa fa-trash" id="check${i}" onclick="removeItem(${contact_data[i].id})"></i> </div>
+                    <div class="col-md-2"><i class="fa fa-edit" id="checkk${i}" onclick="editItem(${contact_data[i].id})"></i> </div>
                     
                   </div>
                 </div>
@@ -151,6 +157,11 @@
             </div>`;
 
           $("#BoxMessages").append((Boxshow));
+          if ($("#checkname" + i).html()===$("#user-name").val() && $("#checkemail" + i).html()===$("#user-email").val()){}
+          else{
+            $("#check" + i).hide();
+            $("#checkk" + i).hide();
+          }
         }
       }
 
@@ -206,7 +217,7 @@
         saveup.style.visibility = "visible"
 
       }
-
+// funsion add post
       $("#addPhoneNumberForm").submit(function (event) {
         // prevent default html form submission action
         event.preventDefault();
@@ -223,9 +234,11 @@
             formData[key] = val;
           }
         });
-
+        formData["name"] = $('#user-name').val();
+        formData["email"] = $('#user-email').val();
         formData["date_Created"] = thailandLocalDate();
         formData["date_Update"] = thailandLocalDate();
+        formData["avatar_url"] = $('#user-avatar').val();
         var $form = $(this);
         var url = $form.attr("action");
 
@@ -246,6 +259,9 @@
         var thailandTimeString = thailandTime.toLocaleString();
         return thailandTimeString;
       }
+      $("#logout").click(function () {
+     window.location.href = "lab13/logout";
+   });
     </script>
 </body>
 

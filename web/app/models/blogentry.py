@@ -22,19 +22,22 @@ class BlogEntry(db.Model, SerializerMixin):
     email = db.Column(db.String(50))
     date_Created = db.Column(db.String(50))
     date_Update = db.Column(db.String(50))
+    avatar_url = db.Column(db.String(100))
 
     
-    def __init__(self, name, message, email,date_Created,date_Update ):
+    def __init__(self, name, message, email,date_Created,date_Update, avatar_url ):
         self.name = name
         self.message = message
         self.email = email
         self.date_Created = date_Created
         self.date_Update = date_Update
+        self.avatar_url = avatar_url
 
 
-    def update(self, name, message, email, date_Created,date_Update):
+    def update(self, name, message, email, date_Created,date_Update,avatar_url ):
         self.name = name
         self.message = message 
         self.email = email
         self.date_Created = date_Created
         self.date_Update = date_Update
+        self.avatar_url = avatar_url 
