@@ -14,6 +14,7 @@ from app import login_manager
 from app.models.contact import Contact
 from app.models.authuser import AuthUser, PrivateContact
 
+import datetime
 import json
 from app.models.blogentry import BlogEntry
 
@@ -143,7 +144,7 @@ def lab11_db_contacts():
 
     blog_entries = list(map(lambda x: x.to_dict(), db_contacts))
     app.logger.debug("DB Contacts: " + str(blog_entries))
-
+    # sorted_data = sorted(blog_entries, key=lambda x: datetime.datetime.strptime(x["date_updated"], '%m/%d/%Y, %I:%M:%S %p'))
     return jsonify(blog_entries)
 
 
@@ -377,12 +378,9 @@ def lab13_UpdateEdit():
 def lab13_setting():
     if request.method == 'POST':
         user = current_user
-
         email = request.form.get('email')
         name = request.form.get('name')
   
-
-
         user_check = AuthUser.query.filter_by(email=email).first()
         if user_check :
             flash('email address already')
@@ -394,16 +392,30 @@ def lab13_setting():
             user.name = name
         user.avatar_url = gen_avatar_url(email,name)
         db.session.commit()
-        return redirect(url_for('lab11_micro'))
+        return redirect(url_for('lab13_passokay'))
     return render_template('lab13/setting.html')
+
+@app.route('/lab13/passokay', methods=('GET', 'POST'))
+def lab13_passokay():
+    if request.method == 'POST':
+        # Get the updated values from the form data
+        password = request.form.get('password')
+        client_check = AuthUser.query.filter_by(email=current_user.email).first()
+        if not client_check or not check_password_hash(client_check.password,password):
+            # if a user is found, we want to redirect back to signup
+            # page so user can try again
+            flash('password ไม่ถูก')
+            return redirect(url_for('lab13_passokay'))
+        else:
+             return redirect(url_for('lab11_micro'))
+
+    return render_template('lab13/passokay.html')
 
 
 @app.route('/lab13/profile')
 @login_required
 def lab13_profile():
     return render_template('lab13/profile.html')
-
-
 
 
 @app.route('/lab13/login', methods=('GET', 'POST'))
