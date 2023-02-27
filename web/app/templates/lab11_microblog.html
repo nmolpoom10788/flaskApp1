@@ -43,7 +43,12 @@
         {%else %}
           <button class="btn" id="logout" type="button">Logout</button>
           {%endif%}
+          <button class="btn" id="return" type="button">Return</button>
+          <div>
+            <i style='font-size:24px' class='fas' onclick="myclick">&#xf0ca;</i>
+          </div>
       </form>
+     
     </div>
   </nav>
 
@@ -73,6 +78,7 @@
                     <input type="hidden" id="user-name" value="{{ current_user.name }}">
                     <input type="hidden" id="user-email" value="{{ current_user.email }}">
                     <input type="hidden" id="user-avatar" value="{{ current_user.avatar_url }}">
+                    <input type="hidden" id="owner_id" value="{{ current_user.id}}">
                     <div class="inputbox">
                       <textarea id="messagebox" name="message" placeholder="What's happening" required></textarea>
                     </div>
@@ -86,13 +92,10 @@
               {% endif %}
             </div>
             <div id="BoxMessages">
-
             </div>
           </div>
         </div>
-
       </div>
-
       <div id="right_3" class="col-md-3">
         <div class="content-box">Who to follow</div>
       </div>
@@ -109,6 +112,9 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"></script> -->
     <script>
+      // function myclick(){
+         
+      // }
 
       function populate_table(contact_data) {
 
@@ -165,6 +171,25 @@
           else{
             $("#check" + i).hide();
             $("#checkk" + i).hide();
+          }
+          // console.log(contact_data[i].owner_id)
+          // console.log($("#owner_id").val())
+
+
+          if (contact_data[i].owner_id == $("#owner_id").val() && contact_data[i].email != $("#user-email").val() ){
+                    var update_ = $('#user-name').val();
+                    var update_email = $('#user-email').val();
+                    var update_avatar = $('#user-avatar').val();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/lab13/UpdateEdit',
+                        data: { id: contact_data[i].id, name: update_ , email: update_email, avatar_url: update_avatar },
+                        success: function (response) {
+                            $.getJSON("lab11/contacts", function (data) {
+                                refresh_table(data);
+                            });
+                        }
+                    });
           }
         }
       }
@@ -243,6 +268,7 @@
         formData["date_Created"] = thailandLocalDate();
         formData["date_Update"] = thailandLocalDate();
         formData["avatar_url"] = $('#user-avatar').val();
+        formData["owner_id"] = $('#owner_id').val();
         var $form = $(this);
         var url = $form.attr("action");
 
@@ -266,6 +292,12 @@
       $("#logout").click(function () {
      window.location.href = "lab13/logout";
    });
+
+    $("#return").click(function () {
+      window.location.href = "lab13";
+   });
+
+   
     </script>
 </body>
 

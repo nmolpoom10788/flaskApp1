@@ -155,7 +155,7 @@ def lab11_micro():
         id_ = result.get('id', '')
         validated = True
         validated_dict = dict()
-        valid_keys = ['name', 'message', 'email','date_Created','date_Update','avatar_url']
+        valid_keys = ['name', 'message', 'email','date_Created','date_Update','avatar_url', 'owner_id']
 
 
         # validate the input
@@ -358,6 +358,20 @@ def lab12_logout():
 @app.route('/lab13')
 def lab13_index():
    return render_template('lab13/index.html')
+   
+
+@app.route('/lab13/UpdateEdit', methods=('GET', 'POST'))
+def lab13_UpdateEdit():
+    id = request.form.get('id')
+    update_name = request.form.get('name')
+    update_email = request.form.get('email')
+    update_avatar = request.form.get('avatar_url')
+    item = BlogEntry.query.get(id)
+    item.name = update_name
+    item.email = update_email
+    item.avatar_url = update_avatar
+    db.session.commit()
+    return lab11_db_contacts()
 
 @app.route('/lab13/setting', methods=('GET', 'POST'))
 def lab13_setting():
