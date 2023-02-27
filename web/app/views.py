@@ -380,7 +380,7 @@ def lab13_setting():
             user.name = name
         user.avatar_url = gen_avatar_url(email,name)
         db.session.commit()
-        return redirect(url_for('lab13_profile'))
+        return redirect(url_for('lab11_micro'))
     return render_template('lab13/setting.html')
 
 

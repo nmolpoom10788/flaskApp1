@@ -34,7 +34,7 @@ class BlogEntry(db.Model, SerializerMixin):
         self.avatar_url = avatar_url
 
 
-    def update(self, name, message, email, date_Created,date_Update,avatar_url ):
+    def update(self, name, message, email, date_Created,date_Update, avatar_url ):
         self.name = name
         self.message = message 
         self.email = email
