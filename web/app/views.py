@@ -404,11 +404,11 @@ def lab13_passokay():
         if not client_check or not check_password_hash(client_check.password,password):
             # if a user is found, we want to redirect back to signup
             # page so user can try again
-            flash('password ไม่ถูก')
+            flash("confirm password doesn't match")
             return redirect(url_for('lab13_passokay'))
         else:
              return redirect(url_for('lab11_micro'))
-
+             
     return render_template('lab13/passokay.html')
 
 

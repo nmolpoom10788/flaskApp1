@@ -11,7 +11,7 @@
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
   <link rel="stylesheet" href="static/css/open-iconic-bootstrap.css">
-  <link rel="stylesheet" href="static/css/lab11twitter.css">
+  <link rel="stylesheet" href="static/css/lab13or11.css">
   <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
@@ -21,6 +21,9 @@
   <link href='https://css.gg/backspace.css' rel='stylesheet'>
 
   <!-- edid icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- icon logout -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <title>My Twitter</title>
 </head>
@@ -38,15 +41,29 @@
         <input class="form-control" id="nav-search" type="search" placeholder="Search Twitter"> &nbsp;
         <img class="tw-user-small rounded-circle" src={{ current_user.avatar_url }}> &nbsp;
         <button class="btn" id="nav-tweet-btn" type="submit">Tweet</button>
-        {% if not current_user.is_authenticated %}
-          <button class="btn" id="logout" type="button">Login</button>
+        <!-- {% if not current_user.is_authenticated %}
+          <button class="btn" id="login" type="button">Login</button>
         {%else %}
           <button class="btn" id="logout" type="button">Logout</button>
-          {%endif%}
-          <button class="btn" id="return" type="button">Return</button>
-          <div>
-            <i style='font-size:24px' class='fas' onclick="myclick">&#xf0ca;</i>
-          </div>
+          <button class="btn" id="back" type="button">Back</button>
+          {%endif%} -->
+
+          <div class="dropdown">
+            <i class='fas fa-angle-down dropbtn' style='font-size:48px;color:width'>&#xf0ca;</i>
+            <div class="dropdown-content">
+              {% if not current_user.is_authenticated %}
+                    <button class="btn" id="login" type="button">Login</button>
+                {% else %}
+                    <!-- <button class="btn" id="logout" type="button">Logout</button>
+                    <button class="btn" id="back" type="button">Back</button> -->
+                
+                      <a href="#"class="btn" id="setting">Setting</a>
+                      <a href="#"class="btn" id="back">Back</a>
+                      <a href="#"class="btn" id="logout">Logout</a>
+                
+                {% endif %}
+            </div>
+        </div>
       </form>
      
     </div>
@@ -55,8 +72,8 @@
   <div class="container">
     <div class="row">
       <div id="left_3" class="col-md-3">
-        <div class="content-box">Account details</div>
-        <div class="content-box">Trends</div>
+        <div class="content-box" id="wow">Account details</div>
+        <div class="content-box" id="wow">Trends</div>
       </div>
       <div id="center_6" class="col-md-6">
         <div class="content-box">
@@ -97,7 +114,7 @@
         </div>
       </div>
       <div id="right_3" class="col-md-3">
-        <div class="content-box">Who to follow</div>
+        <div class="content-box" id="wow">Who to follow</div>
       </div>
     </div>
     <!-- Optional JavaScript-->
@@ -148,9 +165,8 @@
                   </div>
         
                   <div class="tweet-media">
-                    <textarea type="input" id="popup${contact_data[i].id}" name="updatemessage${contact_data[i].id}" style="display:none" placeholder="message" required></textarea><br>
+                    <textarea type="input" id="popup${contact_data[i].id}" name="updatemessage${contact_data[i].id}" style="display:none" placeholder="edit message" required></textarea><br>
                     <input type="submit" id="save${contact_data[i].id}" onclick="getid(${contact_data[i].id})" style="visibility:hidden" value="Save">
-            
                   </div>
 
                   <div class="row text-muted">
@@ -174,8 +190,6 @@
           }
           // console.log(contact_data[i].owner_id)
           // console.log($("#owner_id").val())
-
-
           if (contact_data[i].owner_id == $("#owner_id").val() && contact_data[i].email != $("#user-email").val() ){
                     var update_ = $('#user-name').val();
                     var update_email = $('#user-email').val();
@@ -293,8 +307,14 @@
      window.location.href = "lab13/logout";
    });
 
-    $("#return").click(function () {
+    $("#back").click(function () {
       window.location.href = "lab13";
+   });
+   $("#login").click(function () {
+      window.location.href = "lab13/login";
+   });
+   $("#setting").click(function () {
+      window.location.href = "lab13/setting";
    });
 
    

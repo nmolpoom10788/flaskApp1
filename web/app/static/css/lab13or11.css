@@ -1,0 +1,170 @@
+body {
+    background-color: #FAE39C;
+}
+nav {
+    background-color: #84A9CD;
+    border-bottom: 1px solid #F6F1EE;
+    margin-bottom: 10px;
+}
+
+
+img.tw-user-small {
+    height: 40px;
+}
+ 
+img.tw-user-medium {
+    height: 50px;
+}
+ 
+#nav-search {
+    border-radius: 20px;
+    background-color: #edddf3
+}
+ 
+#nav-tweet-btn {
+    border-radius: 20px;
+    background-color: #056aee;
+    color: #ffffff;
+}
+
+.content-box {
+    background-color: #FAE39C;
+    margin-bottom : 10px;
+    /* border: 1px solid rgb(177, 166, 166);
+    border-right: 1px solid rgb(177, 166, 166);
+    border-bottom: 1px solid rgb(177, 166, 166); */
+
+
+}
+
+.new-tweet-row {
+    background-color: #97C5D8;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.tweet {
+    background-color: #ffffff;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #edf1f4;
+}
+ 
+.tweet-username {
+    font-weight: bold;
+}
+ 
+.tweet-arrow {
+    padding-right: 25px;
+}
+ 
+.tweet-text,
+.tweet-media {
+    padding-right: 10px;
+}
+
+
+.inputbox input{
+    width: 100%;
+    background:rgb(200, 208, 216);
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    border-radius: 35px;
+    border: 1px solid rgb(177, 166, 166);
+    border-right: 1px solid rgb(177, 166, 166);
+    border-bottom: 1px solid rgb(177, 166, 166);
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: #ffffff;
+    box-shadow: 0 5px 15px rgb(122, 122, 122);
+}
+.inputbox textarea{
+    width: 100%;
+    background:rgb(199, 203, 207);
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    border-radius: 35px;
+    border: 1px solid rgb(177, 166, 166);
+    border-right: 1px solid rgb(177, 166, 166);
+    border-bottom: 1px solid rgb(177, 166, 166);
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: #ffffff;
+    box-shadow: 0 5px 15px rgb(122, 122, 122);
+}
+.inputbox{
+    width:  100%;
+    margin-top:10px;
+}
+
+.inputbox input::placeholder{
+    color: #ffffff;
+}
+.inputbox textarea::placeholder{
+    color: #ffffff;
+}
+
+.inputbox input[type="submit"]{
+    background: #5195ee;
+    color: #ffffff;
+    max-width: 100px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+/* #logout{
+    border-radius: 20px;
+    background-color: #29fb08;
+    color: #ffffff;
+} */
+
+#login{
+    border-radius: 20px;
+    background-color: #da3a09;
+    color: #ffffff;
+}
+
+/* #back{
+    border-radius: 20px;
+    background-color: #131212;
+    color: #ffffff;
+    font-display: #fff;
+}
+#setting{
+    border-radius: 20px;
+    background-color: #e9a0a0;
+    color: #ffffff;
+    font-display: #fff;
+} */
+
+/* dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgb(122, 122, 122);
+    z-index: 1;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
