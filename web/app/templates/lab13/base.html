@@ -76,6 +76,8 @@
            <div class="navbar-end">
 
 
+            <img src="{{current_user.avatar_url}}" width="52" >
+            
              <a href="{{ url_for('lab13_login') }}" class="navbar-item">
                Login
              </a>
@@ -84,8 +86,10 @@
              </a>
 
 
-
-
+<!-- edit new name -->
+             <a href="{{ url_for('lab13_setting') }}" class="navbar-item">
+              setting
+            </a>
              <a href="{{ url_for('lab13_logout') }}" class="navbar-item">
                Logout
              </a>

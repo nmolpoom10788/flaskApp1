@@ -36,7 +36,8 @@ def seed_db():
     db.session.add(
         Contact(firstname='สมชาย', lastname='ทรงแบด', phone='081-111-1111'))
     db.session.add(
-        BlogEntry(name='chaiwitchit', message='lab 11 create in twitter', email='nmolpoom10788@gmail.com',date_Created=formatted_datetime,date_Update="asdsdasd"))
+        BlogEntry(name='chaiwitchit', message='lab 11 create in twitter', email='nmolpoom10788@gmail.com',date_Created=formatted_datetime,date_Update="asdsdasd", avatar_url='https://ui-avatars.com/api/?name=\
+สมชาย+ทรงแบด&background=83ee03&color=fff'))
     # LAB12
 
     db.session.commit()

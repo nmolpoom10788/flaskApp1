@@ -114,3 +114,9 @@ img.tw-user-medium {
     margin-bottom: 10px;
     font-weight: 600;
 }
+
+#logout{
+    border-radius: 20px;
+    background-color: #29fb08;
+    color: #ffffff;
+}

@@ -359,6 +359,29 @@ def lab12_logout():
 def lab13_index():
    return render_template('lab13/index.html')
 
+@app.route('/lab13/setting', methods=('GET', 'POST'))
+def lab13_setting():
+    if request.method == 'POST':
+        user = current_user
+
+        email = request.form.get('email')
+        name = request.form.get('name')
+  
+
+
+        user_check = AuthUser.query.filter_by(email=email).first()
+        if user_check :
+            flash('email address already')
+            return redirect(url_for('lab13_setting'))
+        
+        if email:
+            user.email = email
+        if name:
+            user.name = name
+        user.avatar_url = gen_avatar_url(email,name)
+        db.session.commit()
+        return redirect(url_for('lab13_profile'))
+    return render_template('lab13/setting.html')
 
 
 @app.route('/lab13/profile')
