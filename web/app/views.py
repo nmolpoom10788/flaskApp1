@@ -194,6 +194,7 @@ def lab11_micro():
     return render_template('lab11_microblog.html')
 
 @app.route('/lab11/remove_contact', methods=('GET', 'POST'))
+@login_required
 def lab11_remove_contacts():
     app.logger.debug("LAB11 - REMOVE")
     if request.method == 'POST':
